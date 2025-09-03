@@ -1,0 +1,45 @@
+public class busca e derivados no {
+}
+
+No maiorEsq(No p) {
+    if (p! = null) {
+        while(p.dir != null) {
+            p = p.dir;
+        }
+    }
+    return p;
+}
+
+No menorDir(No p) {
+    if (p != null) {
+        while (p.esq != null) {
+            p = p.esq;
+        }
+    }
+    return p;
+}
+
+No remover(No p, int valor) {
+    if (p == null) {
+        retunr p;
+    } else {
+        if (valor < p.chave) {
+            p.esq = remover(p.esq, valor);
+        } else if(valor > p.chave) {
+            p.dir = remover(p.dir, valor);
+        } else {
+            if (p.esq != null) {
+                Noaux = maiorEsq(p.esq);
+                p.chave = aux.chave;
+                p.esq = remover(p.esq, aux.chave);
+            } else if(p.dir != null) {
+                aux = menorDir(p.dir);
+                p.chave = ax.chave;
+                remover(p.dir, aux.chave);
+            } else {
+                return null;
+            }
+        }
+    }
+}
+
