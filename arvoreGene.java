@@ -1,7 +1,7 @@
 import java.io.*; //já importa todas as bibliotecas .io
 import java.util.*;  //já importa todas as bibliotecas .util
 
-public class projeto1 {
+public class arvoreGene {
     
     // Classe Pessoa representa um nó na árvore genealógica
     static class Pessoa {
@@ -33,11 +33,33 @@ public class projeto1 {
                 filho.pai = this;
             }
         }
+
+        // calculo do nivel da pessoa
+        // raiz = 0, filhos = 1, etc
+        public int obterNivel() {
+            if (ehRaiz()) {
+                return 0;
+            }
+            return pai.obterNivel() + 1;
+        }
+
+        @Override
+        public boolean equals(Object obj) {
+            if (this == obj) return true;
+            if (obj == null || getClass() != obj.getClass()) return false;
+            Pessoa pessoa = (Pessoa) obj;
+            return nome.equals(pessoa.nome);
+        }
+        
+        @Override
+        public String toString() {
+            return nome;
+        }
     }
     
     public List<Pessoa> pessoas;
 
-    public projeto1() {
+    public arvoreGene() {
         pessoas = new ArrayList<>();
     }
 
@@ -81,10 +103,18 @@ public class projeto1 {
         }
         leitor.close();
     }
+
+
+
+
+
+
+
+
      public static void main(String[] args) {
         System.out.println("Relacionamentos da Árvore Genealógica");
         Scanner scanner = new Scanner(System.in);
-        projeto1 arvore = new projeto1();
+        arvoreGene arvore = new arvoreGene();
 
         try {
             // carrega dados do arquivo
