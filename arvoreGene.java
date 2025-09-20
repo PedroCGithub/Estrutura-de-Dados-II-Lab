@@ -1,3 +1,8 @@
+// nomes:
+// Pedro Casas Pequeno JUnior RA: 10437031
+//
+//
+
 import java.io.*; //já importa todas as bibliotecas .io
 import java.util.*;  //já importa todas as bibliotecas .util
 
@@ -140,6 +145,115 @@ public class arvoreGene {
         }
     }
 
+    // para achar a relação primo precisa fazer o LCA (Menor ancestral comun)
+    // temos que encontrar o LCA, calcular a distancia de cada pessoa até ele, e determinar o primo e grau baseado nessas distancias
+    // fontes que usamos para entender o LCA
+    // https://www.geeksforgeeks.org/dsa/lowest-common-ancestor-binary-tree-set-1/
+    // https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-tree/description/
+    public String relacaoPrimo(Pessoa pessoa1, Pessoa pessoa2) {
+        Pessoa lca = encontrarLCA(pessoa1, pessoa2);
+        
+        if (lca == null) {
+            return "sem relacao";
+        }
+        
+        int distancia1 = distanciaAncestral(pessoa1, lca);
+        int distancia2 = distanciaAncestral(pessoa2, lca);
+        
+        if (distancia1 == -1 || distancia2 == -1) {
+            return "sem relacao";
+        }
+        
+        // calcula grau de primo e grau
+        int grauPrimo = Math.min(distancia1, distancia2) - 1;
+        int grau = Math.abs(distancia1 - distancia2);
+        
+        // caso especial: irmãos (primo-0 grau 0)
+        if (grauPrimo == 0 && grau == 0) {
+            return "irmao";
+        }
+        
+        // formata relação de primo
+        if (grau == 0) {
+            return "primo-" + grauPrimo;
+        } else {
+            return "primo-" + grauPrimo + " em grau " + grau;
+        }
+    }
+    
+    // encontra Ancestral Comum Mais Baixo (LCA) de duas pessoas
+    private Pessoa encontrarLCA(Pessoa pessoa1, Pessoa pessoa2) {
+        List<Pessoa> ancestrais1 = obterAncestrais(pessoa1);
+        Pessoa atual = pessoa2;
+        
+        while (atual != null) {
+            if (ancestrais1.contains(atual)) {
+                return atual;
+            }
+            atual = atual.pai;
+        }
+        
+        return null;
+    }
+    
+    // obtém todos os ancestrais de uma pessoa
+    private List<Pessoa> obterAncestrais(Pessoa pessoa) {
+        List<Pessoa> ancestrais = new ArrayList<>();
+        Pessoa atual = pessoa;
+        
+        while (atual != null) {
+            ancestrais.add(atual);
+            atual = atual.pai;
+        }
+        
+        return ancestrais;
+    }
+    
+    // calcula distância de uma pessoa até seu ancestral
+    public int distanciaAncestral(Pessoa pessoa, Pessoa ancestral) {
+        Pessoa atual = pessoa;
+        int distancia = 0;
+        
+        while (atual != null) {
+            if (atual.equals(ancestral)) {
+                return distancia;
+            }
+            atual = atual.pai;
+            distancia++;
+        }
+        
+        return -1; // não é ancestral
+    }
+
+    // função principal que determina todos os graus de parentesco com os dois nomes informados
+    public String encontrarParentesco(String nome1, String nome2) {
+        Pessoa pessoa1 = buscarPessoa(nome1);
+        Pessoa pessoa2 = buscarPessoa(nome2);
+        
+        if (pessoa1 == null || pessoa2 == null) {
+            return "sem relacao";
+        }
+        
+        if (pessoa1.equals(pessoa2)) {
+            return "mesma pessoa";
+        }
+        
+        // verifica relação descendente
+        int nivelDescendente = nivelDescendente(pessoa1, pessoa2);
+        if (nivelDescendente >= 0) {
+            return relacaoDescendente(nivelDescendente);
+        }
+        
+        // verifica relação ancestral
+        int nivelAncestrall = nivelDescendente(pessoa2, pessoa1);
+        if (nivelAncestrall >= 0) {
+            return relacaoAncestral(nivelAncestrall);
+        }
+        
+        // verifica relação de primo
+        return relacaoPrimo(pessoa1, pessoa2);
+    }
+
     // carrega os dados
     public void carregarArquivo(String nomeArquivo) throws IOException {
         BufferedReader leitor = new BufferedReader(new FileReader(nomeArquivo));
@@ -167,13 +281,6 @@ public class arvoreGene {
         leitor.close();
     }
 
-
-
-
-
-
-
-
      public static void main(String[] args) {
         System.out.println("Relacionamentos da Árvore Genealógica");
         Scanner scanner = new Scanner(System.in);
@@ -186,6 +293,26 @@ public class arvoreGene {
             arvore.carregarArquivo(nomeArquivo);
             
             System.out.println("Árvore genealógica carregada com sucesso!");
+            System.out.println("Informe consultas (dois nomes separados por espaço, ou 'sair' para terminar):");
+            
+            // Processa consultas
+            while (true) {
+                System.out.print("> ");
+                String entrada = scanner.nextLine().trim();
+                
+                if (entrada.equalsIgnoreCase("sair")) {
+                    break;
+                }
+                
+                String[] nomes = entrada.split("\\s+");
+                if (nomes.length == 2) {
+                    String parentesco = arvore.encontrarParentesco(nomes[0], nomes[1]);
+                    System.out.println(parentesco);
+                } else {
+                    System.out.println("Por favor, digite exatamente dois nomes separados por espaço");
+                }
+            }
+            
             
         } catch (IOException e) {
             System.err.println("Erro ao ler arquivo: " + e.getMessage());
@@ -194,4 +321,3 @@ public class arvoreGene {
         }
     }
 }
-
