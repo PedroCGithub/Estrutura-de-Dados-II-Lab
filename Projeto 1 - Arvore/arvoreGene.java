@@ -1,14 +1,14 @@
 // nomes:
 // Pedro Casas Pequeno JUnior RA: 10437031
-//
-//
+// Pedro Henrique Saraiva Arruda RA: 10437747
+// Tarik Nasser Ferreira Kanbour RA: 10435895
 
 import java.io.*; //já importa todas as bibliotecas .io
 import java.util.*;  //já importa todas as bibliotecas .util
 
 public class arvoreGene {
     
-    // Classe Pessoa representa um nó na árvore genealógica
+    // classe Pessoa representa um nó na árvore genealógica
     static class Pessoa {
         String nome;
         Pessoa pai;
