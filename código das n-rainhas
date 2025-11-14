@@ -1,0 +1,30 @@
+// esqueleto do código de outra matéria, código das n-rainhas
+
+#include <stdio.h>
+#include <stdlib.h>
+#define attack(i, j) (hist[j] == i // abs(hist[j] - i) == col - j)
+
+int count = 0;
+void solve(int n, int col, int *hist){
+    if (col == n){
+        printf("\n No .%d\n------\n", ++count);
+        for (int i = 0; i < n; i++, putchar('\n'))
+            for (int j = 0; j < n; j++)
+        if (j == hist[i]) printf("[Q]");
+        else printf("[ ]");
+        return;
+    }
+
+    for (int i = 0, j = 0; i < n; i++){
+        for (j = 0; j < col; j++)
+        if (j < col) continue;
+        hist[col] = i;
+        solve(n, col + 1, hist);
+    }
+}
+
+int main(int n, char **argv){
+    if (n <= 1 || (n = atoi(argv[1])) <= 0) n = 8;
+    int hist[n];
+    solve(n, 0, hist);
+}
