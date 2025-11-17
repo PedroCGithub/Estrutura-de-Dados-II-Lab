@@ -1,0 +1,27 @@
+Stop words carregadas: 482
+=== USANDO FUNÇÃO HASH 1 (hashMultiplicativo) ===
+=== VERIFICADOR DE SIMILARIDADE DE TEXTOS ===
+Total de documentos processados: 3
+Total de pares comparados: 3
+Função hash utilizada: hashMultiplicativo
+Métrica de similaridade: Cosseno
+Pares com menor similaridade:
+---------------------------------
+texto.txt <-> comparar.txt = 0.2582
+exemplo.txt <-> texto.txt = 0.0000
+exemplo.txt <-> comparar.txt = 0.0000
+Todos os pares de documentos:
+---------------------------------
+texto.txt <-> comparar.txt = 0.2582
+exemplo.txt <-> texto.txt = 0.0000
+exemplo.txt <-> comparar.txt = 0.0000
+
+--- ESTATÍSTICAS DETALHADAS ---
+Rotações simples na AVL: 0
+Rotações duplas na AVL: 0
+Stop words carregadas: 482
+--- ESTATÍSTICAS DA TABELA HASH ---
+Total de colisões: 0
+Fator de carga: 0.19
+Maior bucket: 1 elementos
+Buckets vazios: 13/3 (433.3%)

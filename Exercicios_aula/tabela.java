@@ -63,11 +63,11 @@ class ListaEncadeada {
 }
 
 // Classe Tabela Hash com método da divisão e encadeamento externo
-public class TabelaHash {
+public class tabela {
     private ListaEncadeada[] tabela;
     private int tamanho;
 
-    public TabelaHash(int tamanho) {
+    public tabela(int tamanho) {
         this.tamanho = tamanho;
         tabela = new ListaEncadeada[tamanho];
 
