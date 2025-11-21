@@ -8,7 +8,7 @@ public class TabelaHash<K, V> {
     private int tamanho;
     private int capacidade;
     private int tipoHash;
-    private int totalColisoes; // ← NOVO: contador de colisões
+    private int totalColisoes;
 
     public TabelaHash() {
         this(CAPACIDADE_PADRAO, 1);
@@ -18,7 +18,7 @@ public class TabelaHash<K, V> {
         this.capacidade = capacidade;
         this.tipoHash = tipoHash;
         this.tabela = new ArrayList[capacidade];
-        this.totalColisoes = 0; // ← INICIALIZAR
+        this.totalColisoes = 0;
         for (int i = 0; i < capacidade; i++) {
             tabela[i] = new ArrayList<>();
         }
@@ -43,7 +43,7 @@ public class TabelaHash<K, V> {
                 }
             }
             if (!chaveExistente) {
-                totalColisoes++; // ← CONTAR COLISÃO
+                totalColisoes++;
                 bucket.add(new Entry<>(key, value));
                 tamanho++;
             }
@@ -94,7 +94,6 @@ public class TabelaHash<K, V> {
         return tamanho;
     }
 
-    // ← NOVOS MÉTODOS PARA ESTATÍSTICAS
     public int getTotalColisoes() {
         return totalColisoes;
     }
